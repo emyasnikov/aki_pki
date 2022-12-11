@@ -5,6 +5,15 @@ https://github.com/opencv/opencv/tree/master/data/haarcascades
 
 import cv2
 
+detectors = {
+    "vz123": "Arbeitsstelle",
+    "vz205": "Vorfahrt gewähren!",
+    "vz206": "Halt! Vorfahrt gewähren!",
+    "vz267": "Verbot der Einfahrt",
+    "vz306": "Vorfahrtstraße",
+    "vz350": "Fußgängerüberweg"
+}
+
 capture = cv2.VideoCapture(0)
 cascade = cv2.CascadeClassifier("detectors/vz123.detector.xml")
 
