@@ -16,6 +16,7 @@ detectors = {
 
 capture = cv2.VideoCapture(0)
 cascade = cv2.CascadeClassifier("detectors/vz123.detector.xml")
+font = cv2.FONT_HERSHEY_SIMPLEX
 
 while True:
     _, image = capture.read()
@@ -25,6 +26,7 @@ while True:
 
     for x, y, width, height in faces:
         cv2.rectangle(image, (x, y), (x + width, y + height), color = (255, 0, 0), thickness = 5)
+        cv2.putText(image, "Test", (x, y), font, 0.9, (255, 0, 0), 2)
 
     cv2.imshow("Camera", image)
 
