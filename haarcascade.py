@@ -6,7 +6,7 @@ https://github.com/opencv/opencv/tree/master/data/haarcascades
 import cv2
 
 capture = cv2.VideoCapture(0)
-cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+cascade = cv2.CascadeClassifier("detectors/vz123.detector.xml")
 
 while True:
     _, image = capture.read()
