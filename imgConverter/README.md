@@ -4,7 +4,7 @@ Konvertiert Bilder in ein einheitliches Format zum anlernen von Bilderkennungsal
 Benutzung (Alle Bilder aus dem Ordner input konvertieren und in output speichern):
 Aufruf per python über die Kommandozeile: 
 
-- pyhon imageconverter.py -d input -o output
+- python imageconverter.py -d input -o output
 
 
 Parameter:
