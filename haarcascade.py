@@ -40,18 +40,21 @@ detectors = {
 }
 
 capture = cv2.VideoCapture(0)
-cascade = cv2.CascadeClassifier("detectors/vz123.detector.xml")
 font = cv2.FONT_HERSHEY_SIMPLEX
+
+for code, detector in detectors.items():
+    detector["cascade"] = cv2.CascadeClassifier(f"detectors/{code}.detector.xml")
 
 while True:
     _, image = capture.read()
     image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-    faces = cascade.detectMultiScale(image_gray)
+    for detector in detectors.values():
+        faces = detector["cascade"].detectMultiScale(image_gray)
 
-    for x, y, width, height in faces:
-        cv2.rectangle(image, (x, y), (x + width, y + height), color = (255, 0, 0), thickness = 5)
-        cv2.putText(image, "Test", (x, y), font, 0.9, (255, 0, 0), 2)
+        for x, y, width, height in faces:
+            cv2.rectangle(image, (x, y), (x + width, y + height), color = detector["color"], thickness = 5)
+            cv2.putText(image, detector["text"], (x, y), font, 0.5, detector["color"], 2)
 
     cv2.imshow("Camera", image)
 
