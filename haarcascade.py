@@ -53,8 +53,8 @@ while True:
         faces = detector["cascade"].detectMultiScale(image_gray)
 
         for x, y, width, height in faces:
-            cv2.rectangle(image, (x, y), (x + width, y + height), color = detector["color"], thickness = 5)
-            cv2.putText(image, detector["text"], (x, y), font, 0.5, detector["color"], 2)
+            cv2.rectangle(image, (x, y), (x + width, y + height), color = detector["color"], thickness = 1)
+            cv2.putText(image, detector["text"], (x, y - 5), font, 0.5, detector["color"], 1)
 
     cv2.imshow("Camera", image)
 
