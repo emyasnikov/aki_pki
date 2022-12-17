@@ -1,17 +1,42 @@
-'''
-https://www.youtube.com/watch?v=zwiKIzvGAhM
-https://github.com/opencv/opencv/tree/master/data/haarcascades
-'''
-
 import cv2
 
 detectors = {
-    "vz123": "Arbeitsstelle",
-    "vz205": "Vorfahrt gewähren!",
-    "vz206": "Halt! Vorfahrt gewähren!",
-    "vz267": "Verbot der Einfahrt",
-    "vz306": "Vorfahrtstraße",
-    "vz350": "Fußgängerüberweg"
+    "vz123": {
+        "code": "vz123",
+        "color": (50, 200, 50),
+        "name": "Arbeitsstelle",
+        "text": "Arbeitsstelle"
+    },
+    "vz205": {
+        "code": "vz205",
+        "color": (50, 50, 200),
+        "name": "Vorfahrt gewähren!",
+        "text": "Vorfahrt gewaehren"
+    },
+    "vz206": {
+        "code": "vz206",
+        "color": (50, 50, 200),
+        "name": "Halt! Vorfahrt gewähren!",
+        "text": "Stopp"
+    },
+    "vz267": {
+        "code": "vz267",
+        "color": (200, 50, 150),
+        "name": "Verbot der Einfahrt",
+        "text": "Verbot der Einfahrt"
+    },
+    "vz306": {
+        "code": "vz306",
+        "color": (200, 50, 50),
+        "name": "Vorfahrtstraße",
+        "text": "Vorfahrtstrasse"
+    },
+    "vz350": {
+        "code": "vz350",
+        "color": (50, 150, 250),
+        "name": "Fußgängerüberweg",
+        "text": "Fusgaengerueberweg"
+    }
 }
 
 capture = cv2.VideoCapture(0)
