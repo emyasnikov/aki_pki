@@ -73,7 +73,6 @@ while True:
 
     # Run only at 30 frames per second
     if timeInMS() > last_time + 33:
-        print(last_time)
         image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
         # Lines
