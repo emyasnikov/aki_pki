@@ -1,4 +1,5 @@
-from datetime import datetime
+#from datetime import datetime
+import time # time anstatt Datetime -> time.time() gibt sekunden nach epoch aus
 from turtle import circle
 import cv2
 import numpy as np
@@ -9,20 +10,21 @@ def detection(value):
             last_time = detector.get("time", 0)
 
             # Run detection at round 30 frames per second
-            if time() > last_time + 33:
+            if timeInMS() > last_time + 33:
                 detector["faces"] = detector["cascade"].detectMultiScale(image_gray)
-                detector["time"] = time()
+                detector["time"] = timeInMS()
 
             # Draw only if something has been detected before
             if "faces" in detector:
                 for x, y, width, height in detector["faces"]:
                     cv2.rectangle(image, (x, y), (x + width, y + height), color = detector["color"], thickness = 2)
                     cv2.putText(image, detector["text"], (x, y - 5), font, 0.5, detector["color"], 2)
-
-def time():
-    dt = datetime.now()
-
-    return dt.microsecond / 1000
+                    
+# Funktion umbenannt um nicht mit Modulnamen zu konkurieren
+def timeInMS():   
+    return time.time() * 1000
+    # dt = datetime.now()
+    #return dt.microsecond / 1000
 
 detectors = {
     "vz123": {
