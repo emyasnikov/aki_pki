@@ -1,8 +1,7 @@
-#from datetime import datetime
-import time # time anstatt Datetime -> time.time() gibt sekunden nach epoch aus
 from turtle import circle
 import cv2
 import numpy as np
+import time
 
 def detection(value):
     for detector in detectors.values():
@@ -20,11 +19,8 @@ def detection(value):
                     cv2.rectangle(image, (x, y), (x + width, y + height), color = detector["color"], thickness = 2)
                     cv2.putText(image, detector["text"], (x, y - 5), font, 0.5, detector["color"], 2)
 
-# Funktion umbenannt um nicht mit Modulnamen zu konkurieren
-def timeInMS():   
+def timeInMS():
     return time.time() * 1000
-    # dt = datetime.now()
-    #return dt.microsecond / 1000
 
 detectors = {
     "vz123": {
@@ -74,7 +70,7 @@ detectors = {
 capture = cv2.VideoCapture(0)
 font = cv2.FONT_HERSHEY_SIMPLEX
 
-#Einlesen XML
+# Read XML
 for code, detector in detectors.items():
     detector["cascade"] = cv2.CascadeClassifier(f"detectors/{code}.detector.xml")
 
