@@ -1,30 +1,19 @@
-#from datetime import datetime
-import time # time anstatt Datetime -> time.time() gibt sekunden nach epoch aus
 from turtle import circle
 import cv2
 import numpy as np
+import time
 
 def detection(value):
     for detector in detectors.values():
         if detector["form"] == value:
-            last_time = detector.get("time", 0)
+            faces = detector["cascade"].detectMultiScale(image_gray)
 
-            # Run detection at round 30 frames per second
-            if timeInMS() > last_time + 33:
-                detector["faces"] = detector["cascade"].detectMultiScale(image_gray)
-                detector["time"] = timeInMS()
+            for x, y, width, height in faces:
+                cv2.rectangle(image, (x, y), (x + width, y + height), color = detector["color"], thickness = 2)
+                cv2.putText(image, detector["text"], (x, y - 5), font, 0.5, detector["color"], 2)
 
-            # Draw only if something has been detected before
-            if "faces" in detector:
-                for x, y, width, height in detector["faces"]:
-                    cv2.rectangle(image, (x, y), (x + width, y + height), color = detector["color"], thickness = 2)
-                    cv2.putText(image, detector["text"], (x, y - 5), font, 0.5, detector["color"], 2)
-                    
-# Funktion umbenannt um nicht mit Modulnamen zu konkurieren
-def timeInMS():   
+def timeInMS():
     return time.time() * 1000
-    # dt = datetime.now()
-    #return dt.microsecond / 1000
 
 detectors = {
     "vz123": {
@@ -73,47 +62,54 @@ detectors = {
 
 capture = cv2.VideoCapture(0)
 font = cv2.FONT_HERSHEY_SIMPLEX
+last_time = timeInMS()
 
-#Einlesen XML
+# Read XML
 for code, detector in detectors.items():
     detector["cascade"] = cv2.CascadeClassifier(f"detectors/{code}.detector.xml")
 
 while True:
     _, image = capture.read()
-    image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-    # Lines
-    ret, thresh = cv2.threshold(image_gray, 127, 255, cv2.THRESH_BINARY)
-    contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
-    # Circle
-    circles = cv2.HoughCircles(image_gray, cv2.HOUGH_GRADIENT, 1.2, 100)
+    # Run only at 30 frames per second
+    if timeInMS() > last_time + 33:
+        print(last_time)
+        image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-    # Detection
-    for contour in contours:
-        approx = cv2.approxPolyDP(contour, 0.01*cv2.arcLength(contour,True), True)
+        # Lines
+        ret, thresh = cv2.threshold(image_gray, 127, 255, cv2.THRESH_BINARY)
+        contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+        # Circle
+        circles = cv2.HoughCircles(image_gray, cv2.HOUGH_GRADIENT, 1.2, 100)
 
-        # Triangle
-        if len(approx) == 3:
-            detection("triangle")
+        # Detection
+        for contour in contours:
+            approx = cv2.approxPolyDP(contour, 0.01*cv2.arcLength(contour,True), True)
 
-        # Square & rectangle
-        elif len(approx) == 4:
-            (x,y, w, h) = cv2.boundingRect(approx)
-            ar = w / float(h)
-            if ar >= 0.95 and ar <= 1.05:
-                detection("square")
-            else:
-                detection("rectangle")
+            # Triangle
+            if len(approx) == 3:
+                detection("triangle")
 
-        # Octagon
-        elif len(approx) == 8:
-            detection("octagon")
+            # Square & rectangle
+            elif len(approx) == 4:
+                (x,y, w, h) = cv2.boundingRect(approx)
+                ar = w / float(h)
+                if ar >= 0.95 and ar <= 1.05:
+                    detection("square")
+                else:
+                    detection("rectangle")
 
-    # Circle
-    if circles is not None:
-        circles = np.round(circles[0, :]).astype("int")
-        for (x, y, r) in circles:
-            detection("circle")
+            # Octagon
+            elif len(approx) == 8:
+                detection("octagon")
+
+        # Circle
+        if circles is not None:
+            circles = np.round(circles[0, :]).astype("int")
+            for (x, y, r) in circles:
+                detection("circle")
+
+    last_time = timeInMS()
 
     cv2.imshow("Camera", image)
 
