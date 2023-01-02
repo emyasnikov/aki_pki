@@ -1,7 +1,13 @@
 from datetime import datetime
 from turtle import circle
 import cv2
+import argparse
 import numpy as np
+import os
+
+#Parameter initialisieren
+parser = argparse.ArgumentParser( prog = 'Haarcascade Verkehrszeichen', description = 'Erkennung und Klassifizierung von Straßenschildern mit Haarcascades', epilog = '')
+parser.add_argument('-d', '--directory', default='', help='Relativer Pfad zu den Eingabebildern. Wenn nicht angegeben, dann wird Video gestartet.' )
 
 def detection(value):
     for detector in detectors.values():
@@ -69,7 +75,25 @@ detectors = {
     }
 }
 
-capture = cv2.VideoCapture(0)
+# Parameter einlesen
+args = parser.parse_args()
+
+# camera / Directory initialisieren
+bWithDir = True     # Flag ob Camera oder Directory Mode
+capture = None      # Objekt für Zugriff auf Kamera
+images = []         # Array mit den Pfaden zu den einzelnen Bildern (Directory Mode)
+currentImg = 0      # Index des aktuell angezeigten Bildes (Directory Mode)
+
+if args.directory == '':
+    bWithDir = False
+    capture = cv2.VideoCapture(0)
+else:
+    for filename in os.listdir(args.directory):
+        f = os.path.join(args.directory, filename)
+        if os.path.isfile(f):
+            images.append(f) 
+
+# font initialisieren
 font = cv2.FONT_HERSHEY_SIMPLEX
 
 #Einlesen XML
@@ -77,7 +101,16 @@ for code, detector in detectors.items():
     detector["cascade"] = cv2.CascadeClassifier(f"detectors/{code}.detector.xml")
 
 while True:
-    _, image = capture.read()
+    # Bild einlesen bzw. von der Kamera abgreifen
+    try:
+        if not bWithDir:
+            _, image = capture.read()
+        else:
+            image = cv2.imread( images[currentImg] )
+    except:
+        break
+    
+    # Konvertierung in Grau
     image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     # Lines
@@ -115,8 +148,16 @@ while True:
 
     cv2.imshow("Camera", image)
 
-    if cv2.waitKey(1) == ord("q"):
+    # Tasteneingabe abgreifen
+    key = cv2.waitKey(1)
+    if key == ord("q"):
         break
+    elif key == ord("n"):
+        currentImg += 1
+        if currentImg >= len(images):
+            currentImg = 0
 
-capture.release()
+# Ressourcen freigeben
+if not bWithDir:
+    capture.release()
 cv2.destroyAllWindows()
