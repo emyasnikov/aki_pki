@@ -64,7 +64,7 @@ while True:
         break
 
     # Run only at 30 frames per second
-    if timeInMS() > last_time + 1:
+    if timeInMS() > last_time + 33:
         image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
         # Lines
@@ -103,8 +103,9 @@ while True:
             for (x, y, r) in circles:
                 contour_set.add("circle")
 
+        last_time = timeInMS()
+
     detection(contour_set, image)
-    last_time = timeInMS()
 
     cv2.imshow("Camera", image)
 
