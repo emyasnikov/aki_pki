@@ -1,1 +1,1 @@
-python haarcascade.py
+python main.py #-d ./cascade/training/positive/vz350
