@@ -101,7 +101,7 @@ while True:
         if circles is not None:
             circles = np.round(circles[0, :]).astype("int")
             for (x, y, r) in circles:
-                    contour_set.add("circle")
+                contour_set.add("circle")
 
     delta = timeInMS() - last_time
     last_time = timeInMS()
