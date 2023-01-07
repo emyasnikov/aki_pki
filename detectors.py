@@ -20,6 +20,20 @@ detectors = {
         "name": "Halt! Vorfahrt gewähren!",
         "text": "Stopp"
     },
+    "vz220-20": {
+        "code": "vz220-20",
+        "color": "teal",
+        "form": "rectangle",
+        "name": "Einbahnstrasse",
+        "text": "Einbahnstrasse"
+    },
+    "vz242": {
+        "code": "vz242",
+        "color": "pink",
+        "form": "square",
+        "name": "Fussgaengerzone",
+        "text": "Fussgaengerzone"
+    },
     "vz267": {
         "code": "vz267",
         "color": "purple",
@@ -34,32 +48,18 @@ detectors = {
         "name": "Vorfahrtstraße",
         "text": "Vorfahrtstrasse"
     },
-    "vz350": {
-        "code": "vz350",
-        "color": "orange",
-        "form": "square",
-        "name": "Fußgängerüberweg",
-        "text": "Fusgaengerueberweg"
-    },
-    "vz220-20": {
-        "code": "vz220-20",
-        "color": "teal",
-        "form": "rectangle",
-        "name": "Einbahnstrasse",
-        "text": "Einbahnstrasse"
-    },
-        "vz325": {
+    "vz325": {
         "code": "vz325",
         "color": "orange",
         "form": "rectangle",
         "name": "Spielstrasse",
         "text": "Spielstrasse"
     },
-        "vz242": {
-        "code": "vz242",
-        "color": "pink",
+    "vz350": {
+        "code": "vz350",
+        "color": "orange",
         "form": "square",
-        "name": "Fussgaengerzone",
-        "text": "Fussgaengerzone"
+        "name": "Fußgängerüberweg",
+        "text": "Fusgaengerueberweg"
     }
 }
