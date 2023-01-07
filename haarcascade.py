@@ -2,6 +2,12 @@ from turtle import circle
 import cv2
 import numpy as np
 import time
+import argparse
+import os
+
+#Parameter initialisieren
+parser = argparse.ArgumentParser( prog = 'Haarcascade Verkehrszeichen', description = 'Erkennung und Klassifizierung von Straßenschildern mit Haarcascades', epilog = '')
+parser.add_argument('-d', '--directory', default='', help='Relativer Pfad zu den Eingabebildern. Wenn nicht angegeben, dann wird Video gestartet.' )
 
 def detection(values, image):
     for value in values:
@@ -59,11 +65,52 @@ detectors = {
         "form": "square",
         "name": "Fußgängerüberweg",
         "text": "Fusgaengerueberweg"
-    }
+    },
+    "vz220-20": {
+        "code": "vz220-20",
+        "color": (115, 160, 230),
+        "form": "rectangle",
+        "name": "Einbahnstrasse",
+        "text": "Einbahnstrasse"
+    },
+        "vz325": {
+        "code": "vz325",
+        "color": (120, 230, 115),
+        "form": "rectangle",
+        "name": "Spielstrasse",
+        "text": "Spielstrasse"
+    },
+        "vz242": {
+        "code": "vz242",
+        "color": (230, 100, 120),
+        "form": "square",
+        "name": "Fussgaengerzone",
+        "text": "Fussgaengerzone"
+    } 
 }
 
-capture = cv2.VideoCapture(0)
+# Parameter einlesen
+args = parser.parse_args()
+
+# camera / Directory initialisieren
+bWithDir = True     # Flag ob Camera oder Directory Mode
+capture = None      # Objekt für Zugriff auf Kamera
+images = []         # Array mit den Pfaden zu den einzelnen Bildern (Directory Mode)
+currentImg = 0      # Index des aktuell angezeigten Bildes (Directory Mode)
+
+if args.directory == '':
+    bWithDir = False
+    capture = cv2.VideoCapture(0)
+else:
+    for filename in os.listdir(args.directory):
+        f = os.path.join(args.directory, filename)
+        if os.path.isfile(f):
+            images.append(f) 
+
+# font initialisieren
 font = cv2.FONT_HERSHEY_SIMPLEX
+
+# time für Framerate initialisieren
 last_time = timeInMS()
 
 #Einlesen XML
@@ -71,7 +118,14 @@ for code, detector in detectors.items():
     detector["cascade"] = cv2.CascadeClassifier(f"detectors/{code}.detector.xml")
 
 while True:
-    _, image = capture.read()
+    # Bild einlesen bzw. von der Kamera abgreifen (try/except, weil openCV mit äöüß im Dateinamen nicht klar kommt)
+    try:
+        if not bWithDir:
+            _, image = capture.read()
+        else:
+            image = cv2.imread( images[currentImg] )
+    except:
+        break
 
     # Run only at 30 frames per second
     if timeInMS() > last_time + 1:
@@ -118,8 +172,16 @@ while True:
 
     cv2.imshow("Camera", image)
 
-    if cv2.waitKey(1) == ord("q"):
+    # Tasteneingabe abgreifen
+    key = cv2.waitKey(1)
+    if key == ord("q"):
         break
+    elif key == ord("n"):
+        currentImg += 1
+        if currentImg >= len(images):
+            currentImg = 0
 
-capture.release()
+# Ressourcen freigeben
+if not bWithDir:
+    capture.release()
 cv2.destroyAllWindows()
