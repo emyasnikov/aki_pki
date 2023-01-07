@@ -24,14 +24,14 @@ detectors = {
         "code": "vz220-20",
         "color": "teal",
         "form": "rectangle",
-        "name": "Einbahnstrasse",
+        "name": "Einbahnstraße",
         "text": "Einbahnstrasse"
     },
     "vz242": {
         "code": "vz242",
         "color": "pink",
         "form": "square",
-        "name": "Fussgaengerzone",
+        "name": "Fussgängerzone",
         "text": "Fussgaengerzone"
     },
     "vz267": {
@@ -52,7 +52,7 @@ detectors = {
         "code": "vz325",
         "color": "orange",
         "form": "rectangle",
-        "name": "Spielstrasse",
+        "name": "Spielstraße",
         "text": "Spielstrasse"
     },
     "vz350": {
