@@ -103,7 +103,11 @@ while True:
             for (x, y, r) in circles:
                 contour_set.add("circle")
 
+        delta = timeInMS() - last_time
         last_time = timeInMS()
+        fps = str(int(1000/delta))
+
+        cv2.putText(image, fps, (10, 20), font, 0.5, (255, 255, 255), 1)
 
     detection(contour_set, image)
 
