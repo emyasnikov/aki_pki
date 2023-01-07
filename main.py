@@ -1,3 +1,5 @@
+from colors import colors
+from detectors import detectors
 from turtle import circle
 import cv2
 import numpy as np
@@ -17,77 +19,11 @@ def detection(values, image):
 
                 for x, y, width, height in faces:
                     if width > 50:
-                        cv2.rectangle(image, (x, y), (x + width, y + height), color = detector["color"], thickness = 2)
-                        cv2.putText(image, detector["text"], (x, y - 5), font, 0.5, detector["color"], 2)
+                        cv2.rectangle(image, (x, y), (x + width, y + height), color = colors[detector["color"]], thickness = 2)
+                        cv2.putText(image, detector["text"], (x, y - 5), font, 0.5, colors[detector["color"]], 2)
 
 def timeInMS():
     return time.time() * 1000
-
-detectors = {
-    "vz123": {
-        "code": "vz123",
-        "color": (50, 200, 50),
-        "form": "triangle",
-        "name": "Arbeitsstelle",
-        "text": "Arbeitsstelle"
-    },
-    "vz205": {
-        "code": "vz205",
-        "color": (50, 50, 200),
-        "form": "triangle",
-        "name": "Vorfahrt gewähren!",
-        "text": "Vorfahrt gewaehren"
-    },
-    "vz206": {
-        "code": "vz206",
-        "color": (50, 50, 200),
-        "form": "octagon",
-        "name": "Halt! Vorfahrt gewähren!",
-        "text": "Stopp"
-    },
-    "vz267": {
-        "code": "vz267",
-        "color": (200, 50, 150),
-        "form": "circle",
-        "name": "Verbot der Einfahrt",
-        "text": "Verbot der Einfahrt"
-    },
-    "vz306": {
-        "code": "vz306",
-        "color": (200, 50, 50),
-        "form": "square",
-        "name": "Vorfahrtstraße",
-        "text": "Vorfahrtstrasse"
-    },
-    "vz350": {
-        "code": "vz350",
-        "color": (50, 150, 250),
-        "form": "square",
-        "name": "Fußgängerüberweg",
-        "text": "Fusgaengerueberweg"
-    },
-    "vz220-20": {
-        "code": "vz220-20",
-        "color": (115, 160, 230),
-        "form": "rectangle",
-        "name": "Einbahnstrasse",
-        "text": "Einbahnstrasse"
-    },
-        "vz325": {
-        "code": "vz325",
-        "color": (120, 230, 115),
-        "form": "rectangle",
-        "name": "Spielstrasse",
-        "text": "Spielstrasse"
-    },
-        "vz242": {
-        "code": "vz242",
-        "color": (230, 100, 120),
-        "form": "square",
-        "name": "Fussgaengerzone",
-        "text": "Fussgaengerzone"
-    } 
-}
 
 # Parameter einlesen
 args = parser.parse_args()
@@ -105,7 +41,7 @@ else:
     for filename in os.listdir(args.directory):
         f = os.path.join(args.directory, filename)
         if os.path.isfile(f):
-            images.append(f) 
+            images.append(f)
 
 # font initialisieren
 font = cv2.FONT_HERSHEY_SIMPLEX
