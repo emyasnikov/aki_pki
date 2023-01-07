@@ -101,13 +101,13 @@ while True:
         if circles is not None:
             circles = np.round(circles[0, :]).astype("int")
             for (x, y, r) in circles:
-                contour_set.add("circle")
+                    contour_set.add("circle")
 
-        delta = timeInMS() - last_time
-        last_time = timeInMS()
-        fps = str(int(1000/delta))
+    delta = timeInMS() - last_time
+    last_time = timeInMS()
+    fps = str(int(1000/delta))
 
-        cv2.putText(image, fps, (10, 20), font, 0.5, (255, 255, 255), 1)
+    cv2.putText(image, fps, (10, 20), font, 0.5, (255, 255, 255), 1)
 
     detection(contour_set, image)
 
