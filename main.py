@@ -62,6 +62,21 @@ while True:
             _, image = capture.read()
         else:
             image = cv2.imread( images[currentImg] )
+
+            # Bild skalieren
+            scaleFactor = 1 # Faktor um den das Bild skaliert wird
+            height = image.shape[0]
+            width = image.shape[1]
+
+            if height >= width:
+                scaleFactor = 800 / height
+            else:
+                scaleFactor = 800 / width
+
+            dim = (int(width*scaleFactor), int(height*scaleFactor)) # Neue Dimension des Bildes als Tuple
+            resized = cv2.resize(image, dim, interpolation = cv2.INTER_AREA)
+
+            image = resized
     except:
         break
 
