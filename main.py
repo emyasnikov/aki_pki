@@ -18,7 +18,7 @@ def detection(values, image):
                 faces = detector["cascade"].detectMultiScale(image_gray)
 
                 for x, y, width, height in faces:
-                    if width > 50:
+                    if width > 32:
                         cv2.rectangle(image, (x, y), (x + width, y + height), color = colors[detector["color"]], thickness = 2)
                         cv2.putText(image, detector["text"], (x, y - 5), font, 0.5, colors[detector["color"]], 2)
 
@@ -93,7 +93,7 @@ while True:
         # Detection Form
         for contour in contours:
                x,y,w,h = cv2.boundingRect(contour)
-               if w > 10:
+               if w > 32:
                 approx = cv2.approxPolyDP(contour, 0.01*cv2.arcLength(contour,True), True)
 
                 # Triangle
