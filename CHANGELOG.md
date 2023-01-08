@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.4.0 - 2023-01-08
+
+- FPS
+- Configuration
+- Add files via upload
+- Forms detection
+
 ## v0.3.0 - 2022-12-17
 
 - Loop
