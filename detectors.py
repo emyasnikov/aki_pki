@@ -6,13 +6,13 @@ detectors = {
         "name": "Arbeitsstelle",
         "text": "Arbeitsstelle"
     },
-    "vz205": {
-        "code": "vz205",
-        "color": "red",
-        "form": "triangle",
-        "name": "Vorfahrt gewähren!",
-        "text": "Vorfahrt gewaehren"
-    },
+    # "vz205": {
+    #     "code": "vz205",
+    #     "color": "red",
+    #     "form": "triangle",
+    #     "name": "Vorfahrt gewähren!",
+    #     "text": "Vorfahrt gewaehren"
+    # },
     "vz206": {
         "code": "vz206",
         "color": "red",
@@ -20,20 +20,20 @@ detectors = {
         "name": "Halt! Vorfahrt gewähren!",
         "text": "Stopp"
     },
-    "vz220-20": {
-        "code": "vz220-20",
-        "color": "teal",
-        "form": "rectangle",
-        "name": "Einbahnstraße",
-        "text": "Einbahnstrasse"
-    },
-    "vz242": {
-        "code": "vz242",
-        "color": "pink",
-        "form": "square",
-        "name": "Fussgängerzone",
-        "text": "Fussgaengerzone"
-    },
+    # "vz220-20": {
+    #     "code": "vz220-20",
+    #     "color": "teal",
+    #     "form": "rectangle",
+    #     "name": "Einbahnstraße",
+    #     "text": "Einbahnstrasse"
+    # },
+    # "vz242": {
+    #     "code": "vz242",
+    #     "color": "pink",
+    #     "form": "square",
+    #     "name": "Fussgängerzone",
+    #     "text": "Fussgaengerzone"
+    # },
     "vz267": {
         "code": "vz267",
         "color": "purple",
@@ -41,13 +41,13 @@ detectors = {
         "name": "Verbot der Einfahrt",
         "text": "Verbot der Einfahrt"
     },
-    "vz306": {
-        "code": "vz306",
-        "color": "blue",
-        "form": "square",
-        "name": "Vorfahrtstraße",
-        "text": "Vorfahrtstrasse"
-    },
+    # "vz306": {
+    #     "code": "vz306",
+    #     "color": "blue",
+    #     "form": "square",
+    #     "name": "Vorfahrtstraße",
+    #     "text": "Vorfahrtstrasse"
+    # },
     "vz325": {
         "code": "vz325",
         "color": "orange",
