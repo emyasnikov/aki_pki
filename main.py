@@ -54,6 +54,8 @@ for code, detector in detectors.items():
     detector["cascade"] = cv2.CascadeClassifier(f"detectors/{code}.detector.xml")
 
 while True:
+    contour_set = set()
+
     # Bild einlesen bzw. von der Kamera abgreifen (try/except, weil openCV mit äöüß im Dateinamen nicht klar kommt)
     try:
         if not bWithDir:
@@ -73,7 +75,6 @@ while True:
         # Circle
         circles = cv2.HoughCircles(image_gray, cv2.HOUGH_GRADIENT,1.5,100, param1=300,param2=80,minRadius=1,maxRadius=0)
 
-        contour_set = set()
         # Detection Form
         for contour in contours:
                x,y,w,h = cv2.boundingRect(contour)
